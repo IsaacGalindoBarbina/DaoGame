@@ -1,16 +1,13 @@
 package mx.edu.utez.model.game;
-
         import mx.edu.utez.model.category.BeanCategory;
         import org.slf4j.Logger;
         import org.slf4j.LoggerFactory;
-        import mx.edu.utez.service.ConnectionMySQL;
+        import mx.edu.utez.service.connectionMySQL;
 
         import java.sql.*;
         import java.util.ArrayList;
         import java.util.Base64;
         import java.util.List;
-
-
 public class DaoGame {
     private Connection con;
     private CallableStatement cstm;
@@ -20,7 +17,7 @@ public class DaoGame {
     public List<BeanGame> findAll(){
         List<BeanGame> listGame = new ArrayList<>();
         try {
-            con = ConnectionMySQL.getConnection();
+            con = connectionMySQL.getConnection();
             cstm = con.prepareCall("{call sp_findGames}");
             rs = cstm.executeQuery();
 
@@ -45,7 +42,7 @@ public class DaoGame {
         }catch (SQLException e){
             CONSOLE.error("Ha ocurrido un error: " + e.getMessage());
         } finally {
-            ConnectionMySQL.closeConnections(con, cstm, rs);
+            connectionMySQL.closeConnections(con, cstm, rs);
         }
         return listGame;
     }
@@ -53,7 +50,7 @@ public class DaoGame {
     public BeanGame findById(long id){
         BeanGame game = null;
         try {
-            con = ConnectionMySQL.getConnection();
+            con = connectionMySQL.getConnection();
             //Procedimiento almacenado (SELECT pendiente)
             cstm = con.prepareCall("SELECT * FROM game AS G INNER JOIN category AS C where G.Category_idCategory = ?;");
             cstm.setLong(1, id);
@@ -79,7 +76,7 @@ public class DaoGame {
         }catch (SQLException e){
             CONSOLE.error("Ha ocurrido un error: " + e.getMessage());
         } finally {
-            ConnectionMySQL.closeConnections(con, cstm, rs);
+            connectionMySQL.closeConnections(con, cstm, rs);
         }
         return game;
     }
@@ -87,7 +84,7 @@ public class DaoGame {
     public boolean create(BeanGame game){
         boolean flag = false;
         try{
-            con = ConnectionMySQL.getConnection();
+            con = connectionMySQL.getConnection();
             cstm = con.prepareCall("{call sp_create(?,?,?,?,?)}");
             cstm.setString(1, game.getNameGame());
             cstm.setString(2, game.getImg_game());
@@ -99,7 +96,7 @@ public class DaoGame {
         }catch(SQLException e){
             CONSOLE.error("Ha ocurrido un error: " + e.getMessage());
         } finally {
-            ConnectionMySQL.closeConnections(con, cstm);
+            connectionMySQL.closeConnections(con, cstm);
         }
         return flag;
     }
@@ -107,7 +104,7 @@ public class DaoGame {
     public boolean update(BeanGame game){
         boolean flag = false;
         try{
-            con = ConnectionMySQL.getConnection();
+            con = connectionMySQL.getConnection();
             cstm = con.prepareCall("{call sp_update(?,?,?,?,?)}");
             cstm.setString(1, game.getNameGame());
             cstm.setString(2, game.getImg_game());
@@ -119,15 +116,15 @@ public class DaoGame {
         }catch(SQLException e){
             CONSOLE.error("Ha ocurrido un error: " + e.getMessage());
         }finally{
-            ConnectionMySQL.closeConnections(con, cstm);
+            connectionMySQL.closeConnections(con, cstm);
         }
         return flag;
     }
-
+    //eliminar juego
     public boolean delete(long idGame){
         boolean flag = false;
         try{
-            con = ConnectionMySQL.getConnection();
+            con = connectionMySQL.getConnection();
             cstm = con.prepareCall("{call sp_delete(?)}");
             cstm.setLong(1, idGame);
 
@@ -135,7 +132,7 @@ public class DaoGame {
         }catch(SQLException e){
             CONSOLE.error("Ha ocurrido un error: " + e.getMessage());
         }finally{
-            ConnectionMySQL.closeConnections(con, cstm);
+            connectionMySQL.closeConnections(con, cstm);
         }
         return flag;
     }

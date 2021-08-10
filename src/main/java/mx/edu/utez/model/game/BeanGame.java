@@ -72,4 +72,5 @@ public class BeanGame {
     public void setStatus(int status) {
         Status = status;
     }
+
 }
