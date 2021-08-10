@@ -1,17 +1,16 @@
 package mx.edu.utez.model.game;
 
-        import mx.edu.utez.model.category.BeanCategory;
+import mx.edu.utez.model.category.BeanCategory;
 
-        import java.io.File;
+import java.io.File;
 
 public class BeanGame {
-
     private int idGame;
     private String nameGame;
     private String imgGame;
     private BeanCategory Category_idCategory;
     private String datePremiere;
-    private int Status;
+    private int status;
 
     public BeanGame() {
     }
@@ -22,7 +21,7 @@ public class BeanGame {
         this.imgGame = imgGame;
         Category_idCategory = category_idCategory;
         this.datePremiere = datePremiere;
-        Status = status;
+        this.status = status;
     }
 
     public int getIdGame() {
@@ -45,7 +44,7 @@ public class BeanGame {
         return imgGame;
     }
 
-    public void setImgGame(long imgGame) {
+    public void setImgGame(String imgGame) {
         this.imgGame = imgGame;
     }
 
@@ -66,11 +65,10 @@ public class BeanGame {
     }
 
     public int getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(int status) {
-        Status = status;
+        this.status = status;
     }
-
 }

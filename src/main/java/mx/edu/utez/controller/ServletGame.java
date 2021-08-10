@@ -23,15 +23,17 @@ public class ServletGame extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        map.put("listGames", new DaoGame().findAll());
+        write(response, map);
+        /*
         HttpSession session = request.getSession();
         if(session.getAttribute("session") != null){
             //request.setAttribute("listGames", new DaoGame().findAll());
             //request.getRequestDispatcher("views/game/games.jsp").forward(request, response);
-            map.put("listGames", new DaoGame().findAll());
-            write(response, map);
         } else {
             request.getRequestDispatcher("/").forward(request, response);
         }
+        */
     }
 
     @Override
